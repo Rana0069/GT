@@ -21,9 +21,7 @@ cd servercp .env.example .env# Edit .env and paste your API key
 3\. Install dependencies \& start
 
 cd server
-
 npm install
-
 npm start
 
 
