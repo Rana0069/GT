@@ -1,0 +1,12 @@
+game-tech-news/
+├── client/
+│   ├── index.html
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── app.js
+├── server/
+│   ├── package.json
+│   ├── .env.example
+│   └── server.js
+└── README.md
