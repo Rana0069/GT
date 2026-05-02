@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game & Tech News</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="bg-[#050505] text-white font-sans min-h-screen antialiased">
+
+  <!-- ============================================================ -->
+  <!-- NAVBAR                                                        -->
+  <!-- ============================================================ -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2.5 group">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+            <i data-lucide="zap" class="w-4 h-4 text-white"></i>
+          </div>
+          <span class="text-lg font-semibold tracking-tight">NewsPulse</span>
+        </a>
+
+        <!-- Category Tabs (Desktop) -->
+        <div class="hidden sm:flex items-center bg-white/5 border border-white/10 rounded-full p-1">
+          <button
+            data-category="gaming"
+            class="category-tab active-tab px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2"
+          >
+            <i data-lucide="gamepad-2" class="w-4 h-4"></i>
+            Gaming
+          </button>
+          <button
+            data-category="tech"
+            class="category-tab px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2"
+          >
+            <i data-lucide="cpu" class="w-4 h-4"></i>
+            Tech
+          </button>
+        </div>
+
+        <!-- Right Side -->
+        <div class="flex items-center gap-3">
+          <!-- Auto-refresh indicator -->
+          <div id="refresh-indicator" class="hidden sm:flex items-center gap-1.5 text-xs text-neutral-500" title="Auto-refreshes every 60s">
+            <div id="refresh-dot" class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+            <span id="refresh-timer">60s</span>
+          </div>
+
+          <!-- Mobile menu button -->
+          <button id="mobile-menu-btn" class="sm:hidden p-2 rounded-lg hover:bg-white/10 transition-colors">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="sm:hidden hidden bg-[#111111]/95 backdrop-blur-xl border-t border-white/10">
+      <div class="px-4 py-3 space-y-1">
+        <button
+          data-category="gaming"
+          class="category-tab-mobile w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200"
+        >
+          <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+          Gaming News
+        </button>
+        <button
+          data-category="tech"
+          class="category-tab-mobile w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200"
+        >
+          <i data-lucide="cpu" class="w-5 h-5"></i>
+          Tech News
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- HERO SECTION                                                  -->
+  <!-- ============================================================ -->
+  <header class="relative pt-28 pb-12 md:pt-36 md:pb-16 overflow-hidden">
+    <!-- Background glow -->
+    <div class="absolute inset-0 -z-10">
+      <div id="hero-glow" class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] md:w-[900px] h-[300px] md:h-[400px] rounded-full bg-blue-500/8 blur-[120px] transition-colors duration-700"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
+        <div class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
+        <span class="text-xs font-medium text-blue-400 tracking-wide uppercase">Live Feed</span>
+      </div>
+
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[0.95] mb-5">
+        <span id="hero-title-gaming" class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Gaming</span><span id="hero-title-tech" class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent hidden">Tech</span>
+        <span class="text-white"> News</span>
+      </h1>
+
+      <p class="text-neutral-400 text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed">
+        Real-time coverage of the latest in <span id="hero-sub-gaming">games, esports, and gaming culture</span><span id="hero-sub-tech" class="hidden">technology, AI, gadgets, and innovation</span>.
+      </p>
+
+      <!-- Stats -->
+      <div class="flex items-center justify-center gap-6 mt-8 text-xs text-neutral-500">
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+          <span>Refreshes every 60s</span>
+        </div>
+        <div class="w-1 h-1 rounded-full bg-neutral-700"></div>
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="rss" class="w-3.5 h-3.5"></i>
+          <span>Powered by GNews</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- NEWS GRID                                                     -->
+  <!-- ============================================================ -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+
+    <!-- Featured Card (first article) -->
+    <div id="featured-card" class="hidden mb-10"></div>
+
+    <!-- News Grid -->
+    <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Cards injected by JS -->
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading-state" class="hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Skeleton cards -->
+        <div class="skeleton-card rounded-2xl border border-white/10 bg-neutral-900/50 overflow-hidden">
+          <div class="skeleton-shimmer h-48 bg-neutral-800/50"></div>
+          <div class="p-5 space-y-3">
+            <div class="skeleton-shimmer h-4 w-20 rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-5 w-full rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-5 w-3/4 rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-4 w-full rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-4 w-2/3 rounded bg-neutral-800/50"></div>
+          </div>
+        </div>
+        <div class="skeleton-card rounded-2xl border border-white/10 bg-neutral-900/50 overflow-hidden hidden md:block">
+          <div class="skeleton-shimmer h-48 bg-neutral-800/50"></div>
+          <div class="p-5 space-y-3">
+            <div class="skeleton-shimmer h-4 w-20 rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-5 w-full rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-5 w-3/4 rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-4 w-full rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-4 w-2/3 rounded bg-neutral-800/50"></div>
+          </div>
+        </div>
+        <div class="skeleton-card rounded-2xl border border-white/10 bg-neutral-900/50 overflow-hidden hidden lg:block">
+          <div class="skeleton-shimmer h-48 bg-neutral-800/50"></div>
+          <div class="p-5 space-y-3">
+            <div class="skeleton-shimmer h-4 w-20 rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-5 w-full rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-5 w-3/4 rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-4 w-full rounded bg-neutral-800/50"></div>
+            <div class="skeleton-shimmer h-4 w-2/3 rounded bg-neutral-800/50"></div>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center mt-10">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="error-state" class="hidden">
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-5">
+          <i data-lucide="alert-triangle" class="w-8 h-8 text-red-400"></i>
+        </div>
+        <h3 class="text-xl font-medium mb-2">Failed to load news</h3>
+        <p id="error-message" class="text-neutral-400 text-sm max-w-md mb-6">Something went wrong. Please check your connection and try again.</p>
+        <button
+          id="retry-btn"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full text-sm font-medium hover:bg-neutral-200 transition-colors duration-200"
+        >
+          <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+          Try Again
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="hidden">
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-5">
+          <i data-lucide="inbox" class="w-8 h-8 text-neutral-500"></i>
+        </div>
+        <h3 class="text-xl font-medium mb-2">No articles found</h3>
+        <p class="text-neutral-400 text-sm max-w-md">There are no news articles available for this category right now. Check back soon.</p>
+      </div>
+    </div>
+
+    <!-- Load More -->
+    <div id="load-more-container" class="hidden flex justify-center mt-12">
+      <button
+        id="load-more-btn"
+        class="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-neutral-300 hover:bg-white/10 hover:border-white/20 hover:text-white transition-all duration-300"
+      >
+        <i data-lucide="chevrons-down" class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"></i>
+        Load More
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER                                                        -->
+  <!-- ============================================================ -->
+  <footer class="border-t border-white/5 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2 text-sm text-neutral-500">
+          <div class="w-5 h-5 rounded bg-blue-600 flex items-center justify-center">
+            <i data-lucide="zap" class="w-3 h-3 text-white"></i>
+          </div>
+          <span>NewsPulse © 2025</span>
+        </div>
+        <div class="flex items-center gap-4 text-xs text-neutral-600">
+          <span>Powered by GNews API</span>
+          <span>•</span>
+          <span>Built with Node.js & Tailwind</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- TOAST CONTAINER                                               -->
+  <!-- ============================================================ -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2"></div>
+
+  <!-- App Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>
